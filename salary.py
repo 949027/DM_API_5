@@ -10,14 +10,13 @@ def predict_salary(salary_from, salary_to):
         avg_salary = (salary_from + salary_to) / 2
         return avg_salary
 
-    elif not salary_from and not salary_to:
-        return None
-
     elif salary_from:
         return salary_from * 1.2
 
     elif salary_to:
         return salary_to * 0.8
+
+    return None
 
 
 def predict_rub_salary_hh(language):
