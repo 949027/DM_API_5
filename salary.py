@@ -116,7 +116,8 @@ def create_table(statistics, languages, title):
 
     table_instance = AsciiTable(table, title)
     table_instance.justify_columns[2] = 'right'
-    print(table_instance.table)
+
+    return table_instance.table
 
 
 def main():
@@ -130,8 +131,11 @@ def main():
         hh_statistics[language] = predict_rub_salary_hh(language)
         sj_statistics[language] = predict_rub_salary_sj(language, sj_token)
 
-    create_table(sj_statistics, languages, 'SuperJob Moscow')
-    create_table(hh_statistics, languages, 'HeadHunter Moscow')
+    hh_table = create_table(sj_statistics, languages, 'SuperJob Moscow')
+    sj_table = create_table(hh_statistics, languages, 'HeadHunter Moscow')
+
+    print(hh_table)
+    print(sj_table)
 
 
 if __name__ == '__main__':
