@@ -22,7 +22,6 @@ def predict_salary(salary_from, salary_to):
 def predict_rub_salary_hh(language):
     page_number = 0
     pages_amount = 1
-    found_vacancies = 0
     processed_vacancies = 0
     sum_salary = 0
 
@@ -35,9 +34,9 @@ def predict_rub_salary_hh(language):
         page = page_response.json()
         pages_amount = page['pages']
         vacancies = page['items']
+        found_vacancies = page['found']
 
         for vacancy in vacancies:
-            found_vacancies += 1
             salary = vacancy['salary']
             if salary and salary['currency'] == 'RUR':
                 salary = predict_salary(salary['from'], salary['to'])
@@ -58,7 +57,6 @@ def predict_rub_salary_hh(language):
 def predict_rub_salary_sj(language, token):
     results_more = True
     page_number = 0
-    found_vacancies = 0
     sum_salary = 0
     processed_vacancies = 0
 
@@ -77,9 +75,9 @@ def predict_rub_salary_sj(language, token):
         page_response.raise_for_status()
         vacancies = page_response.json()['objects']
         results_more = page_response.json()['more']
+        found_vacancies = page_response.json()['total']
 
         for vacancy in vacancies:
-            found_vacancies += 1
             if vacancy['currency'] == 'rub':
                 salary = predict_salary(
                     vacancy['payment_from'],
