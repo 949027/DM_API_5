@@ -73,9 +73,10 @@ def predict_rub_salary_sj(language, token):
 
         page_response = requests.get(url, headers=headers, params=payload)
         page_response.raise_for_status()
-        vacancies = page_response.json()['objects']
-        results_more = page_response.json()['more']
-        found_vacancies = page_response.json()['total']
+        page = page_response.json()
+        vacancies = page['objects']
+        results_more = page['more']
+        found_vacancies = page['total']
 
         for vacancy in vacancies:
             if vacancy['currency'] == 'rub':
