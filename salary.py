@@ -44,12 +44,12 @@ def predict_rub_salary_hh(language):
                 processed_vacancies += 1
         page_number += 1
 
-    average_solary = int(sum_salary / processed_vacancies)
+    average_salary = int(sum_salary / processed_vacancies)
 
     statistics = {
         'found_vacancies': found_vacancies,
         'processed_vacancies': processed_vacancies,
-        'average_solary': average_solary,
+        'average_salary': average_salary,
     }
     return statistics
 
@@ -89,12 +89,12 @@ def predict_rub_salary_sj(language, token):
 
         page_number += 1
 
-    average_solary = int(sum_salary / processed_vacancies)
+    average_salary = int(sum_salary / processed_vacancies)
 
     statistics = {
         'found_vacancies': found_vacancies,
         'processed_vacancies': processed_vacancies,
-        'average_solary': average_solary,
+        'average_salary': average_salary,
     }
 
     return statistics
