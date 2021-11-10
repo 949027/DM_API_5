@@ -27,7 +27,12 @@ def predict_rub_salary_hh(language):
 
     while page_number < pages_amount:
         url = 'https://api.hh.ru/vacancies/'
-        payload = {'text': language, 'period': '1', 'area': '1', 'page': page_number}
+        payload = {
+            'text': language,
+            'period': '1',
+            'area': '1',
+            'page': page_number
+        }
         page_response = requests.get(url, params=payload)
         page_response.raise_for_status()
 
