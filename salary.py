@@ -20,21 +20,21 @@ def predict_salary(salary_from, salary_to):
 
 
 def predict_rub_salary_hh(language):
-    page = 0
+    page_number = 0
     pages_amount = 1
     found_vacancies = 0
     processed_vacancies = 0
     sum_salary = 0
 
-    while page < pages_amount:
+    while page_number < pages_amount:
         url = 'https://api.hh.ru/vacancies/'
-        payload = {'text': language, 'period': '1', 'area': '1', 'page': page}
+        payload = {'text': language, 'period': '1', 'area': '1', 'page': page_number}
         page_response = requests.get(url, params=payload)
         page_response.raise_for_status()
 
-        page_data = page_response.json()
-        pages_amount = page_data['pages']
-        vacancies = page_data['items']
+        page = page_response.json()
+        pages_amount = page['pages']
+        vacancies = page['items']
 
         for vacancy in vacancies:
             found_vacancies += 1
@@ -43,7 +43,7 @@ def predict_rub_salary_hh(language):
                 salary = predict_salary(salary['from'], salary['to'])
                 sum_salary += salary
                 processed_vacancies += 1
-        page += 1
+        page_number += 1
 
     average_solary = int(sum_salary / processed_vacancies)
 
@@ -57,7 +57,7 @@ def predict_rub_salary_hh(language):
 
 def predict_rub_salary_sj(language, token):
     results_more = True
-    page = 0
+    page_number = 0
     found_vacancies = 0
     sum_salary = 0
     processed_vacancies = 0
@@ -68,7 +68,7 @@ def predict_rub_salary_sj(language, token):
         payload = {
             't': '4',
             'keyword': language,
-            'page': page,
+            'page': page_number,
             'count': 100,
             'period': 0,
         }
@@ -89,7 +89,7 @@ def predict_rub_salary_sj(language, token):
                     sum_salary += salary
                     processed_vacancies += 1
 
-        page += 1
+        page_number += 1
 
     average_solary = int(sum_salary / processed_vacancies)
 
@@ -103,7 +103,7 @@ def predict_rub_salary_sj(language, token):
 
 
 def create_table(statistics, languages, title):
-    table_data = [[
+    table = [[
         'Язык программирования',
         'Вакансий найдено',
         'Вакансий обработано',
@@ -113,9 +113,9 @@ def create_table(statistics, languages, title):
         line = [language]
         for value in statistics[language].values():
             line.append(value)
-        table_data.append(line)
+        table.append(line)
 
-    table_instance = AsciiTable(table_data, title)
+    table_instance = AsciiTable(table, title)
     table_instance.justify_columns[2] = 'right'
     print(table_instance.table)
 
