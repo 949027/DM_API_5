@@ -108,10 +108,8 @@ def create_table(statistics, languages, title):
         'Вакансий обработано',
         'Средняя зарплата'
     ]]
-    for language in languages:
-        line = [language]
-        for value in statistics[language].values():
-            line.append(value)
+    for language, calculations in statistics.items():
+        line = [language, *calculations.values()]
         table.append(line)
 
     table_instance = AsciiTable(table, title)
