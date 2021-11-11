@@ -106,7 +106,7 @@ def predict_rub_salary_sj(language, token):
     return statistics
 
 
-def create_table(statistics, languages, title):
+def create_table(statistics, title):
     table = [[
         'Язык программирования',
         'Вакансий найдено',
@@ -134,8 +134,8 @@ def main():
         hh_statistics[language] = predict_rub_salary_hh(language)
         sj_statistics[language] = predict_rub_salary_sj(language, sj_token)
 
-    hh_table = create_table(sj_statistics, languages, 'SuperJob Moscow')
-    sj_table = create_table(hh_statistics, languages, 'HeadHunter Moscow')
+    hh_table = create_table(sj_statistics, 'SuperJob Moscow')
+    sj_table = create_table(hh_statistics, 'HeadHunter Moscow')
 
     print(hh_table)
     print(sj_table)
