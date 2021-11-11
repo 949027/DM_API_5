@@ -5,6 +5,13 @@ from terminaltables import AsciiTable
 import requests
 
 
+def download_page(url, payload, headers=''):
+    page_response = requests.get(url, params=payload, headers=headers)
+    page_response.raise_for_status()
+
+    return page_response.json()
+
+
 def predict_salary(salary_from, salary_to):
     if salary_from and salary_to:
         avg_salary = (salary_from + salary_to) / 2
@@ -35,10 +42,7 @@ def predict_rub_salary_hh(language):
             'area': city_id,
             'page': page_number
         }
-        page_response = requests.get(url, params=payload)
-        page_response.raise_for_status()
-
-        page = page_response.json()
+        page = download_page(url, payload)
         pages_amount = page['pages']
         vacancies = page['items']
         found_vacancies = page['found']
@@ -79,10 +83,7 @@ def predict_rub_salary_sj(language, token):
             'count': 100,
             'period': publish_period,
         }
-
-        page_response = requests.get(url, headers=headers, params=payload)
-        page_response.raise_for_status()
-        page = page_response.json()
+        page = download_page(url, payload, headers)
         vacancies = page['objects']
         results_more = page['more']
         found_vacancies = page['total']
