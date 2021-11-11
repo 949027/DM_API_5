@@ -24,13 +24,15 @@ def predict_rub_salary_hh(language):
     pages_amount = 1
     processed_vacancies = 0
     sum_salary = 0
+    publish_period = 1
+    city_id = 1
 
     while page_number < pages_amount:
         url = 'https://api.hh.ru/vacancies/'
         payload = {
             'text': language,
-            'period': '1',
-            'area': '1',
+            'period': publish_period,
+            'area': city_id,
             'page': page_number
         }
         page_response = requests.get(url, params=payload)
@@ -64,16 +66,18 @@ def predict_rub_salary_sj(language, token):
     page_number = 0
     sum_salary = 0
     processed_vacancies = 0
+    city_id = 4
+    publish_period = 0
 
     while results_more:
         url = 'https://api.superjob.ru/2.0/vacancies/'
         headers = {'X-Api-App-Id': token}
         payload = {
-            't': '4',
+            't': city_id,
             'keyword': language,
             'page': page_number,
             'count': 100,
-            'period': 0,
+            'period': publish_period,
         }
 
         page_response = requests.get(url, headers=headers, params=payload)
